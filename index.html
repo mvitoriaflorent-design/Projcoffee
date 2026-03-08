@@ -1,362 +1,411 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Começo do Café - Linha do Tempo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
-    <style>
-        /* CONFIGURAÇÕES GERAIS */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Lora', serif;
-            background-color: #fcfaf7;
-            color: #333;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* BOTÃO DO MENU */
-        .menu-icon {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 1000;
-            cursor: pointer;
-            background: #2c1810;
-            padding: 12px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+<title>O Começo do Café - Linha do Tempo</title>
 
-        .bar {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            transition: 0.4s;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-        /* MENU LATERAL */
-        .sidebar {
-            position: fixed;
-            right: -320px;
-            top: 0;
-            width: 280px;
-            height: 100vh;
-            background-color: #2c1810;
-            color: white;
-            transition: 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-            padding-top: 100px;
-            z-index: 999;
-            box-shadow: -10px 0 20px rgba(0,0,0,0.3);
-        }
+<style>
 
-        .sidebar.active {
-            right: 0;
-        }
+body{
+margin:0;
+padding:0;
+font-family:'Lora',serif;
+background-color:#fcfaf7;
+color:#333;
+overflow-x:hidden;
+}
 
-        .menu-item {
-            padding: 20px 35px;
-            font-size: 1.2rem;
-            color: #d7ccc8;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #3e2723;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+/* MENU */
 
-        .menu-item:hover {
-            background-color: #3e2723;
-            color: #fff;
-            padding-left: 45px;
-        }
+.menu-icon{
+position:fixed;
+top:25px;
+right:25px;
+z-index:1000;
+cursor:pointer;
+background:#2c1810;
+padding:12px;
+border-radius:8px;
+display:flex;
+flex-direction:column;
+gap:5px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
-        /* ESTRUTURA DE CONTEÚDO */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+.bar{
+width:25px;
+height:3px;
+background-color:white;
+transition:0.4s;
+}
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: #2c1810;
-            text-align: center;
-            margin-bottom: 10px;
-        }
+/* SIDEBAR */
 
-        h2 {
-            font-family: 'Playfair Display', serif;
-            color: #2c1810;
-        }
+.sidebar{
+position:fixed;
+right:-320px;
+top:0;
+width:280px;
+height:100vh;
+background-color:#2c1810;
+color:white;
+transition:0.5s;
+padding-top:100px;
+z-index:999;
+box-shadow:-10px 0 20px rgba(0,0,0,0.3);
+}
 
-        .subtitle {
-            text-align: center;
-            font-style: italic;
-            color: #6f4e37;
-            font-size: 1.3rem;
-            margin-bottom: 50px;
-        }
+.sidebar.active{
+right:0;
+}
 
-        /* IMAGENS */
-        .img-wrapper {
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-            background-color: #fff;
-            margin-bottom: 60px;
-        }
+.menu-item{
+padding:20px 35px;
+font-size:1.2rem;
+color:#d7ccc8;
+text-decoration:none;
+display:block;
+border-bottom:1px solid #3e2723;
+cursor:pointer;
+transition:0.3s;
+}
 
-        .img-full {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+.menu-item:hover{
+background-color:#3e2723;
+color:#fff;
+padding-left:45px;
+}
 
-        /* SEÇÕES */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.6s ease-in-out;
-        }
+/* CONTAINER */
 
-        .active-section {
-            display: block;
-        }
+.container{
+max-width:900px;
+margin:0 auto;
+padding:40px 20px;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+h1{
+font-family:'Playfair Display',serif;
+font-size:3.5rem;
+color:#2c1810;
+text-align:center;
+margin-bottom:10px;
+}
 
-        /* HISTÓRIA TEXTO */
-        .historia-texto p {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            text-align: justify;
-        }
+h2{
+font-family:'Playfair Display',serif;
+color:#2c1810;
+}
 
-        /* TIPOS DE GRÃO */
-        .grao-item {
-            text-align: center;
-            margin-bottom: 80px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid #e0e0e0;
-        }
+.subtitle{
+text-align:center;
+font-style:italic;
+color:#6f4e37;
+font-size:1.3rem;
+margin-bottom:50px;
+}
 
-        .grao-item img {
-            max-width: 400px;
-            width: 90%;
-            height: auto;
-            margin-bottom: 25px;
-            transition: 0.4s;
-            border-radius: 10px;
-        }
+/* IMAGEM FULL */
 
-        /* RECEITAS CARDS */
-        .categoria-header {
-            color: #2c1810;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-            margin-top: 50px;
-            font-family: 'Playfair Display', serif;
-        }
+.img-wrapper{
+width:100vw;
+position:relative;
+left:50%;
+margin-left:-50vw;
+background:#fff;
+margin-bottom:60px;
+}
 
-        .receita-container {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-top: 30px;
-        }
+.img-full{
+width:100%;
+display:block;
+}
 
-        .receita-card {
-            background: #fff;
-            border-left: 5px solid #6f4e37;
-            padding: 25px;
-            border-radius: 0 10px 10px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
+/* SEÇÕES */
 
-        .receita-card h3 {
-            margin-top: 0;
-            color: #2c1810;
-            font-size: 1.6rem;
-        }
+.content-section{
+display:none;
+animation:fadeIn 0.6s ease-in-out;
+}
 
-        .receita-card ul {
-            list-style: none;
-            padding: 0;
-        }
+.active-section{
+display:block;
+}
 
-        .receita-card li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
 
-        .receita-card li strong {
-            color: #6f4e37;
-        }
+/* TEXTO */
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .sidebar { width: 100%; right: -100%; }
-        }
-    </style>
+.historia-texto p{
+line-height:1.8;
+font-size:1.1rem;
+margin-bottom:25px;
+text-align:justify;
+}
+
+/* TIPOS DE GRÃO */
+
+.grao-item{
+text-align:center;
+margin-bottom:80px;
+padding-bottom:40px;
+border-bottom:1px solid #e0e0e0;
+}
+
+.grao-item img{
+max-width:400px;
+width:90%;
+margin-bottom:25px;
+border-radius:10px;
+}
+
+/* RECEITAS */
+
+.categoria-header{
+color:#2c1810;
+border-bottom:2px solid #e0e0e0;
+padding-bottom:10px;
+margin-top:50px;
+font-family:'Playfair Display',serif;
+}
+
+.receita-container{
+display:flex;
+flex-direction:column;
+gap:25px;
+margin-top:30px;
+}
+
+.receita-card{
+background:#fff;
+border-left:5px solid #6f4e37;
+padding:25px;
+border-radius:0 10px 10px 0;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.receita-card h3{
+margin-top:0;
+color:#2c1810;
+font-size:1.6rem;
+}
+
+.receita-card ul{
+list-style:none;
+padding:0;
+}
+
+.receita-card li{
+margin-bottom:8px;
+line-height:1.6;
+}
+
+.receita-card li strong{
+color:#6f4e37;
+}
+
+/* FOOTER */
+
+footer{
+background:#2c1810;
+color:#d7ccc8;
+text-align:center;
+padding:20px;
+margin-top:60px;
+font-size:0.9rem;
+letter-spacing:1px;
+}
+
+footer strong{
+color:white;
+}
+
+/* RESPONSIVO */
+
+@media (max-width:768px){
+
+h1{
+font-size:2.5rem;
+}
+
+.sidebar{
+width:100%;
+right:-100%;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="menu-icon" onclick="toggleMenu()">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
+<div class="menu-icon" onclick="toggleMenu()">
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+</div>
 
-    <nav class="sidebar" id="sidebar">
-        <div class="menu-item" onclick="changeContent('inicio')">🏠 Início</div>
-        <div class="menu-item" onclick="changeContent('historia')">📜 História</div>
-        <div class="menu-item" onclick="changeContent('tipos')">🌱 Tipos de Grão</div>
-        <div class="menu-item" onclick="changeContent('receitas')">☕ Receitas</div>
-    </nav>
+<nav class="sidebar" id="sidebar">
+<div class="menu-item" onclick="changeContent('inicio')">🏠 Início</div>
+<div class="menu-item" onclick="changeContent('historia')">📜 História</div>
+<div class="menu-item" onclick="changeContent('tipos')">🌱 Tipos de Grão</div>
+<div class="menu-item" onclick="changeContent('receitas')">☕ Receitas</div>
+</nav>
 
-    <div class="container">
-        
-        <div id="inicio" class="content-section active-section">
-            <h1>Linha do Tempo do Café</h1>
-            <p class="subtitle">Uma jornada visual e histórica através do grão mais amado do planeta.</p>
-            
-            <div class="img-wrapper">
-                <img src="cafe img.png" alt="Saco de Café" class="img-full">
-            </div>
+<div class="container">
 
-            <p style="text-align: center; font-size: 1.2rem; line-height: 1.8;">
-                Bem-vindo ao nosso guia especializado. Explore as origens milenares da bebida, 
-                conheça a anatomia botânica dos grãos e aprenda as receitas que definem as melhores cafeterias do mundo.
-            </p>
-        </div>
+<div id="inicio" class="content-section active-section">
 
-        <div id="historia" class="content-section historia-texto">
-            <h1>A Origem da Lenda</h1>
-            <h2>A Epopeia do Café</h2>
-            <p>A história do café é uma mistura de lenda, comércio, religião e política que atravessa séculos e continentes. É a história de como um pequeno fruto vermelho de uma árvore africana transformou economias, moldou culturas e se tornou o ritual matinal de bilhões de pessoas.</p>
+<h1>Linha do Tempo do Café</h1>
 
-            <h2>O Começo: Kaldi e a Etiópia</h2>
-            <p>Tudo começa nas terras altas da Etiópia, no século IX. A lenda conta que um pastor chamado Kaldi notou que suas cabras ficavam extraordinariamente enérgicas após comerem os frutos de um certo arbusto. Intrigado, ele provou os frutos e sentiu uma onda de vivacidade.</p>
-            <p>Ele levou os frutos a um monge, que inicialmente os jogou ao fogo. O aroma delicioso dos grãos torrados encantou os presentes, que decidiram moê-los e misturá-los com água quente, criando a primeira infusão de café.</p>
+<p class="subtitle">
+Uma jornada visual e histórica através do grão mais amado do planeta.
+</p>
 
-            <h2>Mundo Árabe e Europa</h2>
-            <p>No século XV, o café chegou ao Iêmen, onde foi cultivado comercialmente. Nos portos como Moca, o comércio floresceu e a bebida espalhou-se para Constantinopla, onde surgiram as primeiras casas de café, conhecidas como "escolas de sabedoria".</p>
-            <p>O café chegou à Europa no século XVII. Inicialmente suspeito, foi "batizado" pelo Papa Clemente VIII. Logo, casas de café surgiram em Londres, Paris e Viena, tornando-se centros de intelectuais e artistas.</p>
+<div class="img-wrapper">
+<img src="cafe img.png" class="img-full">
+</div>
 
-            <h2>Chegada ao Brasil</h2>
-            <p>O café chegou ao Brasil em 1727, trazido por Francisco de Melo Palheta. O cultivo expandiu-se rapidamente, tornando o Brasil o maior produtor mundial no século XIX, posição que mantém com orgulho até os dias atuais na era do "Café da Terceira Onda".</p>
-        </div>
+<p style="text-align:center;font-size:1.2rem;line-height:1.8;">
+Bem-vindo ao nosso guia especializado. Explore as origens milenares da bebida, conheça a anatomia botânica dos grãos e aprenda as receitas que definem as melhores cafeterias do mundo.
+</p>
 
-        <div id="tipos" class="content-section">
-            <h1>Principais Variedades</h1>
+</div>
 
-            <div class="grao-item">
-                <img src="cafe arabia.png" alt="Café Arábica">
-                <h3>Café Arábica</h3>
-                <p>O favorito dos especialistas. Cultivado em altas altitudes, oferece uma complexidade de sabores maior, acidez equilibrada e notas que variam do floral ao achocolatado.</p>
-            </div>
+<!-- HISTORIA -->
 
-            <div class="grao-item">
-                <img src="cafe robusta.png" alt="Café Robusta">
-                <h3>Café Robusta</h3>
-                <p>Conhecido pela sua resistência e alto teor de cafeína. Possui um sabor mais terroso e amargo, sendo essencial para a criação de blends intensos e do famoso "crema" no espresso.</p>
-            </div>
+<div id="historia" class="content-section historia-texto">
 
-            <div class="grao-item">
-                <img src="cafe liberica.png" alt="Café Liberica">
-                <h3>Café Liberica</h3>
-                <p>Uma variedade rara e exótica. Seus grãos são assimétricos e possuem um perfil de sabor único, misturando notas amadeiradas com um aroma floral persistente.</p>
-            </div>
-        </div>
+<h1>A Origem da Lenda</h1>
 
-        <div id="receitas" class="content-section">
-            <h1>A Arte do Preparo</h1>
-            <p class="subtitle">Descubra as melhores formas de extrair o máximo de sabor do seu grão.</p>
+<h2>O Começo: Kaldi e a Etiópia</h2>
 
-            <h2 class="categoria-header">☕ Métodos de Extração</h2>
-            <div class="receita-container">
-                <div class="receita-card">
-                    <h3>1. Prensa Francesa (French Press)</h3>
-                    <p>Preserva os óleos naturais do café, resultando em uma bebida encorpada e texturizada.</p>
-                    <ul>
-                        <li><strong>Moagem:</strong> Grossa (como sal grosso).</li>
-                        <li><strong>Proporção:</strong> 1 colher de sopa para 200ml de água.</li>
-                        <li><strong>Preparo:</strong> Infusão por 4 min, mexa levemente e pressione o êmbolo devagar.</li>
-                    </ul>
-                </div>
+<p>
+A história do café começa nas terras altas da Etiópia. A lenda conta que um pastor chamado Kaldi percebeu que suas cabras ficavam mais energéticas após comer certos frutos vermelhos.
+</p>
 
-                <div class="receita-card">
-                    <h3>2. Hario V60 (Filtrado Premium)</h3>
-                    <p>Destaca a acidez e a doçura através de espirais internas que ajudam na aeração.</p>
-                    <ul>
-                        <li><strong>Moagem:</strong> Média-fina (como açúcar cristal).</li>
-                        <li><strong>Dica:</strong> Escalde o filtro antes para remover o gosto de papel.</li>
-                        <li><strong>Preparo:</strong> Despeje a água em movimentos circulares, do centro para fora.</li>
-                    </ul>
-                </div>
-            </div>
+<p>
+Intrigado, ele levou os frutos para monges locais. Ao serem torrados e misturados com água quente surgiu uma das primeiras formas da bebida que hoje conhecemos como café.
+</p>
 
-            <h2 class="categoria-header">🥛 Bebidas Elaboradas</h2>
-            <div class="receita-container">
-                <div class="receita-card">
-                    <h3>3. Cappuccino Italiano Clássico</h3>
-                    <p>Uma arte de proporção equilibrada (A Regra dos Terços).</p>
-                    <ul>
-                        <li><strong>Composição:</strong> 1/3 Espresso, 1/3 Leite Vaporizado, 1/3 Espuma Densa.</li>
-                        <li><strong>Finalização:</strong> A doçura deve vir naturalmente do leite.</li>
-                    </ul>
-                </div>
+<h2>Expansão pelo Mundo</h2>
 
-                <div class="receita-card">
-                    <h3>4. Cold Brew (Café Gelado)</h3>
-                    <p>Extraído a frio, reduz a acidez em até 60% e é extremamente refrescante.</p>
-                    <ul>
-                        <li><strong>Tempo:</strong> Geladeira por 12 a 18 horas.</li>
-                        <li><strong>Como servir:</strong> Coe e sirva com muito gelo e uma rodela de limão.</li>
-                    </ul>
-                </div>
+<p>
+No século XV o café chegou ao Iêmen e ao mundo árabe. Logo surgiram as primeiras cafeterias conhecidas como "Casas de Sabedoria".
+</p>
 
-                <div class="receita-card">
-                    <h3>5. Affogato (Sobremesa)</h3>
-                    <p>O contraste perfeito entre o amargo/quente e o doce/gelado.</p>
-                    <ul>
-                        <li><strong>Ingredientes:</strong> 1 bola de sorvete de baunilha + 1 dose de espresso quente.</li>
-                        <li><strong>Preparo:</strong> Despeje o café sobre o sorvete na hora de servir.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<h2>Chegada ao Brasil</h2>
 
-    </div>
+<p>
+O café chegou ao Brasil em 1727 e rapidamente se tornou o principal produto agrícola do país. Hoje o Brasil é o maior produtor de café do mundo.
+</p>
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
+</div>
 
-        function changeContent(id) {
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(s => s.classList.remove('active-section'));
+<!-- TIPOS -->
 
-            document.getElementById(id).classList.add('active-section');
-            
-            toggleMenu();
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-    </script>
+<div id="tipos" class="content-section">
+
+<h1>Principais Variedades</h1>
+
+<div class="grao-item">
+<img src="cafe arabia.png">
+<h3>Café Arábica</h3>
+<p>Possui sabor suave, acidez equilibrada e aroma complexo.</p>
+</div>
+
+<div class="grao-item">
+<img src="cafe robusta.png">
+<h3>Café Robusta</h3>
+<p>Mais forte e amargo, com maior teor de cafeína.</p>
+</div>
+
+<div class="grao-item">
+<img src="cafe liberica.png">
+<h3>Café Liberica</h3>
+<p>Variedade rara com notas florais e aroma marcante.</p>
+</div>
+
+</div>
+
+<!-- RECEITAS -->
+
+<div id="receitas" class="content-section">
+
+<h1>A Arte do Preparo</h1>
+
+<p class="subtitle">Descubra formas incríveis de preparar café.</p>
+
+<div class="receita-container">
+
+<div class="receita-card">
+<h3>Cappuccino Italiano</h3>
+<ul>
+<li><strong>1/3</strong> Espresso</li>
+<li><strong>1/3</strong> Leite vaporizado</li>
+<li><strong>1/3</strong> Espuma de leite</li>
+</ul>
+</div>
+
+<div class="receita-card">
+<h3>Cold Brew</h3>
+<ul>
+<li>Deixe o café em infusão fria</li>
+<li>Tempo: 12 a 18 horas</li>
+<li>Sirva com gelo</li>
+</ul>
+</div>
+
+<div class="receita-card">
+<h3>Affogato</h3>
+<ul>
+<li>1 bola de sorvete de baunilha</li>
+<li>1 dose de espresso quente</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Todos os direitos reservados | <strong>Maria Vit – ProjCoffee</strong>
+</footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("active");
+}
+
+function changeContent(id){
+
+const sections=document.querySelectorAll(".content-section");
+
+sections.forEach(s=>s.classList.remove("active-section"));
+
+document.getElementById(id).classList.add("active-section");
+
+toggleMenu();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+</script>
 
 </body>
 </html>
